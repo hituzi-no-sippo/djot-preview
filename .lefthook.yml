@@ -1,0 +1,5 @@
+---
+min_version: 1.6.5
+
+extends:
+- .lefthook/convert_djot.yml

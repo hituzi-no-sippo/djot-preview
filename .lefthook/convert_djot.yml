@@ -1,0 +1,13 @@
+---
+convert-djot-to-html:
+  commands:
+    convert: &convert
+      run: |
+        echo {all_files}
+        for djot_file in {all_files}; do
+          # You can not use `${djot_file//.dj/.html}`
+          # instead of `"${djot_file%.*}.html"
+          # because this script is ran by sh.
+          jotdown "$djot_file" --output "${djot_file%.*}.html"
+        done
+      glob: "*.dj"
