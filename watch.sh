@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# @(#) v0.1.0 2024-03-09T16:27:47+09:00
+# @(#) v1.0.0 2024-03-09T16:32:05+09:00
 # @(#) Copyright (C) 2024 hituzi-no-sippo
 # @(#) LICENSE: MIT-0 (https://choosealicense.com/licenses/mit-0/)
 
@@ -53,14 +53,23 @@ watch() {
 }
 
 main() {
+  devserver --reload &
+  declare -r server_PID="$!"
+
   # NOTE
   # At this point,
   # this script does not convert Djot file that are not managed by Git to HTML.
   if lefthook run "$COMMAND_TO_CONVERT"; then
+    if [ "$1" != '' ]; then
+      xdg-open "http://localhost:8080/${1%.*}"
+    fi
+
     watch
 
     lefthook run remove-html-converted-from-djot
   fi
+
+  kill -s TERM "$server_PID"
 }
 
-main
+main "$1"
