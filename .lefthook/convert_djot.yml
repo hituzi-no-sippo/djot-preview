@@ -11,3 +11,16 @@ convert-djot-to-html:
           jotdown "$djot_file" --output "${djot_file%.*}.html"
         done
       glob: "*.dj"
+
+remove-html-converted-from-djot:
+  commands:
+    remove:
+      <<: *convert
+      run: |
+        # You can not use `${djot_files//.dj/.html}`
+        # instead of `"$(echo "{all_files}" | sed 's/\.dj/\.html/g')"`
+        # because this script is ran by sh.
+        files_to_remove="$(echo "{all_files}" | sed 's/\.dj/\.html/g')"
+        # shellcheck disable=SC2086
+        # I want to remove multiple files.
+        rm --force $files_to_remove
