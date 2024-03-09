@@ -13,3 +13,4 @@ packages:
 - name: hellux/jotdown@0.3.2
 - name: evilmartians/lefthook@v1.6.5
 - name: watchexec/watchexec@v1.25.1
+- name: kettle11/devserver@v0.4.3
